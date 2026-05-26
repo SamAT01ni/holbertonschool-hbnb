@@ -34,3 +34,7 @@ Persistence Layer:
 - handles the connection to database
 - deals with all the read and write for the database e.g. changing the values of said property owner wants
 - doesnt know of any logic above only does the task given
+
+Facade Pattern:
+- Alot of small highly focused code (def for each single task) vs one class doing everything
+  
