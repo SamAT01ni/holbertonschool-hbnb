@@ -141,3 +141,7 @@ Place & Review:
 
 Place & Amenity:
 - Many to many relationships can exist between Place and Amenity. Places can contain multiple amenities, and amenities can also exist between multiple places. Example: Wifi and a Shower can exist at multiple listed places.
+
+Each entity of the Business Layer also have a UUID4 identifier to make sure each attribute/class have uniqueness to them. Attributes such as created_at and updated_at are included to track object creation and modification times.
+
+Overall, these 4 entities collectively makeup the Business Layer of the HBnB application, which also defines how each of these entities interacts within the system.
