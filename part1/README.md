@@ -41,6 +41,8 @@ Facade Pattern:
 ```mermaid
 classDiagram
 
+
+
 class User {
     +UUID id
     +String first_name
@@ -103,3 +105,39 @@ Place "0..*" --> "0..*" Amenity : has
 Review "1" --> "1" User : author
 Review "1" --> "1" Place : for
 ```
+This class diagram shows the Business layer of the HBnB application. It displays the core components of the Business Layer, including User, Place, Review, and Amenities, along with each of their own attributes, methods and relationships respectively.
+
+User:
+- Represents users of the HBnB application.
+- Each user contains personal info such as their first and last name, email and password. 
+- The is_admin attribute identifies administrative users.
+- This class also includes methods for registration, profile updates, and deletion.
+
+Place:
+- Represents properties listed by users.
+- Each property includes info such as title, description, price, latitude and longitude.
+- A place belongs to a single user and can contain multiple amenities.
+- Methods are included for creating, updating, deleting, and listing places.
+
+Review:
+- Represents feedback left by users on places they have stayed at.
+- Contains ratings and comments left by customers.
+- Each review is associated to one user and one place.
+
+Amenities:
+- Represents features that can be associated with places.
+- Can be linked to multiple places.
+
+Relationships between each entity:
+
+User & Place:
+- One to many relationships exist between User and Place, where one user can own multiple places, but a place only belongs to one user.
+
+User & Review:
+- One to many relationships exist between User and Review. Users can write multiple reviews.
+
+Place & Review:
+- One to many relationships exist between Place and Reviews. A place can receive multiple reviews.
+
+Place & Amenity:
+- Many to many relationships can exist between Place and Amenity. Places can contain multiple amenities, and amenities can also exist between multiple places. Example: Wifi and a Shower can exist at multiple listed places.
