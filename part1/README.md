@@ -2,19 +2,25 @@
 classDiagram
 class PresentationLayer {
     <<Interface>>
-    +ServiceAPI
+    +Services
+    +API
+}
+class Facade {
+    +Facade
 }
 class BusinessLogicLayer {
     +UserEntity
     +PlaceEntity
     +ReviewEntity
     +AmentityEntity
+    +BookingEntity
 }
 class PersistenceLayer {
     +DatabaseAccess
 
 }
-PresentationLayer --> BusinessLogicLayer : Facade Pattern
+PresentationLayer --> Facade: API forwards request to Facade
+Facade --> BusinessLogicLayer: Delegates to BLL
 BusinessLogicLayer --> PersistenceLayer : Database Operations
 ```
 
