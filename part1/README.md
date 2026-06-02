@@ -184,17 +184,17 @@ API-->>User: Welcome! Here are your details
 sequenceDiagram
 actor User
 participant API
+participant Facade
 participant BusinessLogic
 participant Database
 
 User->>API: Place Creation (User , Place Data)
-API->>Database: verify_data(User, Place Data)
-Database-->>API: user_verified
-Database-->>API: place_verified
-API->>BusinessLogic: create_place(Place Data)
-BusinessLogic->>Database: Save_place(Place Data)
-Database-->>BusinessLogic: Confirm Save
-BusinessLogic-->>API: Return Place
+API->>Facade: Register Place(User, Place Data)
+Facade->>BusinessLogic: verify_data(User, Place Data)
+BusinessLogic->>Database: does place already exist?
+Database-->>BusinessLogic: place doesnt exist, user can create
+BusinessLogic-->>Facade: place registered
+Facade-->>API: Return Place response
 API-->>User: Place created
 ```
 
