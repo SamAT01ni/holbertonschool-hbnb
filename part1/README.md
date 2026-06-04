@@ -49,8 +49,6 @@ BusinessLogicLayer --> PersistenceLayer : Database Operations
 ```mermaid
 classDiagram
 
-
-
 class User {
     +UUID user_id PK
     +String first_name
@@ -58,61 +56,33 @@ class User {
     +String email
     +String password
     +Boolean is_admin
-    +DateTime created_at
-    +DateTime updated_at
-    +register()
-    +update_profile()
-    +delete()
 }
 
 class Place {
-    +UUID id
+    +UUID id PK
+    +UUID owner_id FK
     +String title
     +String description
     +Float price
-    +Float latitude
-    +Float longitude
-    +DateTime created_at
-    +DateTime updated_at
-    +create()
-    +update()
-    +delete()
-    +list()
-    +add_amenity()
-    +remove_amenity()
 }
 
 class Review {
     +UUID id PK
     +UUID user_id FK
+    +UUID place_id FK
     +Integer rating
     +String comment
-    +DateTime created_at
-    +DateTime updated_at
-    +create()
-    +update()
-    +delete()
-    +list_by_place()
 }
 
 class Amenity {
-    +UUID id
+    +UUID id PK
     +String name
-    +String description
-    +DateTime created_at
-    +DateTime updated_at
-    +create()
-    +update()
-    +delete()
-    +list()
 }
 
 User "1" --> "0..*" Place : owns
 User "1" --> "0..*" Review : writes
 Place "1" --> "0..*" Review : receives
 Place "0..*" --> "0..*" Amenity : has
-Review "1" --> "1" User : author
-Review "1" --> "1" Place : for
 ```
 This class diagram shows the Business layer of the HBnB application. It displays the core components of the Business Layer, including User, Place, Review, and Amenities, along with each of their own attributes, methods and relationships respectively.
 
