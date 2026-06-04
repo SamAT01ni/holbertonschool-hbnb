@@ -173,7 +173,7 @@ participant API
 participant Facade
 participant BusinessLogic
 participant Database
-User->>API: Register for service
+User->>API: Register for account
 API->>Facade: register user(user data)
 Facade->>BusinessLogic: Validate user data(user data)
 BusinessLogic->>Database: does email exist?
@@ -198,8 +198,8 @@ participant Database
 User->>API: Place Creation (User , Place Data)
 API->>Facade: Register Place(User, Place Data)
 Facade->>BusinessLogic: verify_data(User, Place Data)
-BusinessLogic->>Database: does place already exist?
-Database-->>BusinessLogic: place doesnt exist, user can create
+BusinessLogic->>Database: Create place(User, Place Data)
+Database-->>BusinessLogic: place data stored
 BusinessLogic-->>Facade: place registered
 Facade-->>API: Return Place response
 API-->>User: Place created
@@ -236,7 +236,7 @@ participant BusinessLogic
 participant Database
 User->>API: Enter criteria for place
 API->>Facade: get places(filters)
-Facade->>BusinessLogic: fetch placess(filters)
+Facade->>BusinessLogic: fetch places(filters)
 BusinessLogic->>Database: retrieve matches
 Database-->>BusinessLogic: list of places
 BusinessLogic-->>Facade: return list of matching places
