@@ -52,7 +52,7 @@ classDiagram
 
 
 class User {
-    +UUID id
+    +UUID id PK
     +String first_name
     +String last_name
     +String email
@@ -83,7 +83,8 @@ class Place {
 }
 
 class Review {
-    +UUID id
+    +UUID id PK
+    +UUID user_id FK
     +Integer rating
     +String comment
     +DateTime created_at
