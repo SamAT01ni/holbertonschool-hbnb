@@ -8,31 +8,31 @@ All models inherit from the 'BaseModel' class, which provides all common attribu
 
 ## BaseModel
 
-The 'BaseModel' class serves as the parent class for all models to inherit from and provides the following common attributes:
+The `BaseModel` class serves as the parent class for all models to inherit from and provides the following common attributes:
 
 - `id`: A unique UUID4 identifier
-- 'created_at': Date and time the object was created
-- 'updated_at': Date and time the object was last modified
+- `created_at`: Date and time the object was created
+- `updated_at`: Date and time the object was last modified
 
 ## Methods
 
-- 'save()': Updates the 'updated_at' timestamp
-- 'update(data)': Updates object attributes from a dictionary and refreshes timestamp
+- `save()`: Updates the 'updated_at' timestamp
+- `update(data)`: Updates object attributes from a dictionary and refreshes timestamp
 
 ---
 
 ## User
 
-'User' represents a user of the HBnB application.
+`User` represents a user of the HBnB application.
 
 ## Attributes
 
-- 'first_name'
-- 'last_name'
-- 'email'
-- 'is_admin'
-- 'places'
-- 'reviews'
+- `first_name`
+- `last_name`
+- `email`
+- `is_admin`
+- `places`
+- `reviews`
 
 ## Responsibilites
 
@@ -45,18 +45,18 @@ The 'BaseModel' class serves as the parent class for all models to inherit from 
 
 ## Place
 
-'Place' model represents a property listing.
+`Place` model represents a property listing.
 
 ## Attributes
 
-- 'title'
-- 'description'
-- 'price'
-- 'latitude'
-- 'longitude'
-- 'owner'
-- 'reviews'
-- 'amenities'
+- `title`
+- `description`
+- `price`
+- `latitude`
+- `longitude`
+- `owner`
+- `reviews`
+- `amenities`
 
 ## Responsibilites
 
@@ -67,21 +67,21 @@ The 'BaseModel' class serves as the parent class for all models to inherit from 
 
 ## Methods
 
-- 'add_review(review)'
-- 'add_amenity(amenity)'
+- `add_review(review)`
+- `add_amenity(amenity)`
 
 ---
 
 ## Review
 
-'Review' model represents feedback left by a user for a place.
+`Review` model represents feedback left by a user for a place.
 
 ## Attributes
 
-- 'text'
-- 'rating'
-- 'place'
-- 'user'
+- `text`
+- `rating`
+- `place`
+- `user`
 
 ## Responsibilites
 
@@ -93,11 +93,11 @@ The 'BaseModel' class serves as the parent class for all models to inherit from 
 
 ## Amenity
 
-'Amenity' model represents a feature available at a place
+`Amenity` model represents a feature available at a place
 
 ## Attributes
 
-- 'name'
+- `name`
 
 ## Responsibilites
 
