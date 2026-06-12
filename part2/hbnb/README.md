@@ -10,7 +10,7 @@ All models inherit from the 'BaseModel' class, which provides all common attribu
 
 The 'BaseModel' class serves as the parent class for all models to inherit from and provides the following common attributes:
 
-- 'id': A unique UUID4 identifier
+- `id`: A unique UUID4 identifier
 - 'created_at': Date and time the object was created
 - 'updated_at': Date and time the object was last modified
 
