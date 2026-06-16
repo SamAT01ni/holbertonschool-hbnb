@@ -21,6 +21,9 @@ class HBnBFacade:
     
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
+    
+    def get_user_list(self):
+        return self.user_repo.get_all()
 
     # Placeholder method for fetching a place by ID
     def get_place(self, place_id):

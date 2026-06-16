@@ -29,6 +29,11 @@ class UserList(Resource):
 
         new_user = facade.create_user(user_data)
         return {'id': new_user.id, 'first_name': new_user.first_name, 'last_name': new_user.last_name, 'email': new_user.email}, 201
+    
+    def get(self):
+       "Get all users"
+       users = facade.get_user_list()
+       return [{'id': u.id, 'first_name': u.first_name, 'last_name': u.last_name, 'email': u.email} for u in users] , 200
 
 @api.route('/<user_id>')
 class UserResource(Resource):
