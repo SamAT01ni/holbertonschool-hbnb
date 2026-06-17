@@ -28,6 +28,8 @@ class HBnBFacade:
     
     def update_user(self, user_id, data):
         user = self.user_repo.get(user_id)
+        if not user:
+            return None
         user.update(data)
         return user
 
@@ -44,6 +46,8 @@ class HBnBFacade:
 
     def update_amenity(self, amenity_id, amenity_data):
         amenity = self.amenity_repo.get(amenity_id)
+        if not amenity:
+            return None
         amenity.update(amenity_data)
         return amenity
 
