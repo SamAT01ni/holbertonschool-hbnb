@@ -11,13 +11,19 @@ user_model = api.model('User', {
     'last_name': fields.String(required=True, description='Last name of the user'),
     'email': fields.String(required=True, description='Email of the user')
 })
-
+user_lamb = api.model('User marshal', {
+    'id': fields.String,
+    'first_name': fields.String,
+    'last_name': fields.String,
+    'email': fields.String
+    })
 @api.route('/')
 class UserList(Resource):
     @api.expect(user_model, validate=True)
     @api.response(201, 'User successfully created')
     @api.response(400, 'Email already registered')
     @api.response(400, 'Invalid input data')
+    @api.marshal_with(user_lamb)
     def post(self):
         """Register a new user"""
         user_data = api.payload
@@ -26,9 +32,8 @@ class UserList(Resource):
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
             return {'error': 'Email already registered'}, 400
-
-        new_user = facade.create_user(user_data)
-        return {'id': new_user.id, 'first_name': new_user.first_name, 'last_name': new_user.last_name, 'email': new_user.email}, 201
+        return user_data, 201
+    
     @api.response(200, 'User List created')
     def get(self):
        "Get all users"
