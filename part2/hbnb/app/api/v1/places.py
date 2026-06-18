@@ -43,7 +43,6 @@ place_lamb2 = api.model('Place Marhsal', {
     'latitude': fields.Float,
     'longitude': fields.Float,
     'owner_id': fields.String,
-    'amenities': fields.List(fields.String),
 })
 
 
@@ -57,9 +56,12 @@ class PlaceList(Resource):
         """Register a new place"""
         place_data = api.payload
         new_place = facade.create_place(place_data)
+        if not new_place:
+            return {'error': 'Owner not found'}, 400
         return new_place, 201
 
     @api.response(200, 'List of places retrieved successfully')
+    @api.marshal_list_with(place_lamb1)
     def get(self):
         """Retrieve a list of all places"""
         places = facade.get_all_places()
