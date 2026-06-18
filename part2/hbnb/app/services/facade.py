@@ -13,8 +13,8 @@ class HBnBFacade:
 
     # Placeholder method for creating a user
     def create_user(self, user_data):
-         existing_user = get_user_by_email(user_data['email'])
-         if existing_user:
+        existing_user = self.get_user_by_email(user_data['email'])
+        if existing_user:
             return None
 
         user = User(**user_data)
