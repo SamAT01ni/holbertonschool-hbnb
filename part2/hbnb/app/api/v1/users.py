@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#/usr/bin/python3
 
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
@@ -15,8 +15,8 @@ user_lamb = api.model('User marshal', {
     'id': fields.String,
     'first_name': fields.String,
     'last_name': fields.String,
-    'email': fields.String
-    })
+    'email': fields.String,
+})
 @api.route('/')
 class UserList(Resource):
     @api.expect(user_model, validate=True)
@@ -27,12 +27,18 @@ class UserList(Resource):
     def post(self):
         """Register a new user"""
         user_data = api.payload
+        new_user = facade.create_user(user_data)
+        if new_user is None:
+            return {'error': 'Email already in use'}, 400
 
-        # Simulate email uniqueness check (to be replaced by real validation with persistence)
-        existing_user = facade.get_user_by_email(user_data['email'])
-        if existing_user:
-            return {'error': 'Email already registered'}, 400
-        return user_data, 201
+        return new_user, 201
+
+#        # Simulate email uniqueness check (to be replaced by real validation with persistence)
+#        existing_user = facade.get_user_by_email(user_data['email'])
+#        if existing_user:
+#            return {'error': 'Email already registered'}, 400
+#        new_user = facade.create_user(user_data)
+#        return {'id': new_user.id, 'first_name': new_user.first_name, 'last_name': new_user.last_name, 'email': new_user.email}, 201
     
     @api.response(200, 'User List created')
     def get(self):
