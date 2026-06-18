@@ -61,7 +61,6 @@ class HBnBFacade:
         owner = self.user_repo.get(place_data['owner_id'])
         if not owner:
             return None
-        place_data['owner_id'] = owner
 
         place = Place(**place_data)
         self.place_repo.add(place)
