@@ -36,7 +36,7 @@ place_model_lamb = api.model("Place ID", {
     'latitude': fields.Float,
     'longitude': fields.Float,
     'owner': fields.Nested(user_model),
-    'amenities_id': fields.List(fields.Nested(amenity_model)),
+    'amenities': fields.List(fields.Nested(amenity_model)),
 })
 
 

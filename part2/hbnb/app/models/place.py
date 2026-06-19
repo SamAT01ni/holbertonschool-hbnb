@@ -8,7 +8,7 @@ from app.models.user import User
 class Place(BaseModel):
     """Place class for property listings."""
 
-    def __init__(self, title, description, price, latitude, longitude, owner_id, amenities):
+    def __init__(self, title, description, price, latitude, longitude, owner_id, amenities_id):
         super().__init__()
 
         if not title or len(title) > 100:
@@ -33,7 +33,8 @@ class Place(BaseModel):
         self.longitude = float(longitude)
         self.owner_id = owner_id
         self.reviews = []
-        self.amenities = amenities
+        self.amenities_id = amenities_id
+        self.amenities = []
 
         self.owner = None
 
