@@ -26,7 +26,7 @@ place_model = api.model('Place', {
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
     'owner_id': fields.String(required=True, description='ID of the owner'),
-    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
+    'amenities_id': fields.List(fields.String, required=True, description="List of amenities ID's")
 })
 
 place_model_lamb = api.model("Place ID", {
@@ -36,7 +36,7 @@ place_model_lamb = api.model("Place ID", {
     'latitude': fields.Float,
     'longitude': fields.Float,
     'owner': fields.Nested(user_model),
-    'amenities': fields.List(fields.Nested(amenity_model)),
+    'amenities_id': fields.List(fields.Nested(amenity_model)),
 })
 
 
@@ -73,7 +73,7 @@ class PlaceList(Resource):
         place_data = api.payload
         new_place = facade.create_place(place_data)
         if not new_place:
-            return {'error': 'Owner not found'}, 400
+            return {'error': 'Owner or amenity not found'}, 400
         return new_place, 201
 
     @api.response(200, 'List of places retrieved successfully')
@@ -100,10 +100,9 @@ class PlaceResource(Resource):
     @api.response(200, 'Place updated successfully')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
-    @api.marshal_with(place_lamb3)
     def put(self, place_id):
         """Update a place's information"""
-        place = facade.update_user(place_id, api.payload)
+        place = facade.update_place(place_id, api.payload)
         if not place:
-            return {'error': 'Place not found'}, 404
+            return {'error': 'Place or amenity not found'}, 404
         return {"message": "Place updated successfully"}, 200
