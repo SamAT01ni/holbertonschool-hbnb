@@ -35,6 +35,8 @@ class Place(BaseModel):
         self.reviews = []
         self.amenities = amenities
 
+        self.owner = None
+
 
     def add_review(self, review):
         """Add a review to the place."""
