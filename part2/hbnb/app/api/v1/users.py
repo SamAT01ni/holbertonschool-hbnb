@@ -29,7 +29,7 @@ class UserList(Resource):
         user_data = api.payload
         new_user = facade.create_user(user_data)
         if new_user is None:
-            return {'error': 'Email already in use'}, 400
+            return {'error': 'Email already in use or invalid'}, 400
         return new_user, 201
  
     @api.response(200, 'User List created')
