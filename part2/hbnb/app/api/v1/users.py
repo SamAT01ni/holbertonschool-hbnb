@@ -17,6 +17,8 @@ user_lamb = api.model('User marshal', {
     'last_name': fields.String,
     'email': fields.String,
 })
+
+
 @api.route('/')
 class UserList(Resource):
     @api.expect(user_model, validate=True)
@@ -38,6 +40,7 @@ class UserList(Resource):
        "Get all users"
        users = facade.get_user_list()
        return users
+
 
 @api.route('/<user_id>')
 class UserResource(Resource):
@@ -61,3 +64,17 @@ class UserResource(Resource):
         if not user:
             return {'error': 'User not found'}, 404
         return user, 200
+
+
+@api.route('/<user_id>/reviews')
+class UserReviewList(Resource):
+    @api.response(200, 'List of reviews retrieved successfully')
+    @api.response(404, 'User not found')
+    def get(self, user_id):
+        """GEt all reviews for a specific user"""
+        user = facade.get_user(user_id)
+        if not user:
+            return {'error': 'User not found'}
+        reviews = facade.get_reviews_by_user(user_id)
+        return [{'id': review.id, 'text': review.text, 'rating': review.rating
+        } for review in reviews], 200

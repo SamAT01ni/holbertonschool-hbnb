@@ -138,6 +138,11 @@ class HBnBFacade:
         if not place:
             return None
         return place.reviews
+    def get_reviews_by_user(self, user_id):
+        user = self.user_repo.get(user_id)
+        if not user:
+            return None
+        return user.reviews
 
     def update_review(self, review_id, review_data):
         review = self.review_repo.get(review_id)
