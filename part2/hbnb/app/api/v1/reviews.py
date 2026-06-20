@@ -26,6 +26,11 @@ review_lamb2 = api.model('Review Marshal 1', {
     'rating': fields.Integer,
 })
 
+review_lamb3 = api.model('Review marshal 3', {
+    'text': fields.String,
+    'rating': fields.Integer
+})
+
 @api.route('/')
 class ReviewList(Resource):
     @api.expect(review_model, validate=True)
@@ -61,7 +66,7 @@ class ReviewResource(Resource):
             return {'error': 'Review not found'}, 404
         return review, 200
 
-    @api.expect(review_model)
+    @api.expect(review_lamb3)
     @api.response(200, 'Review updated successfully')
     @api.response(404, 'Review not found')
     @api.response(400, 'Invalid input data')
