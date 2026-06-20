@@ -115,7 +115,12 @@ class HBnBFacade:
             return None
 
         try:
-            review = Review(**review_data)
+            review = Review(
+                text=review_data['text'],
+                rating=int(review_data['rating']),
+                user=user,
+                place=place
+            )
         except (ValueError, TypeError):
             return None
 
