@@ -131,7 +131,7 @@ class HBnBFacade:
         return self.review_repo.get(review_id)
 
     def get_all_reviews(self):
-        return self.review_repo.get()
+        return self.review_repo.get_all()
 
     def get_reviews_by_place(self, place_id):
         place = self.place_repo.get(place_id)
@@ -150,7 +150,7 @@ class HBnBFacade:
         review = self.review_repo.get(review_id)
         if not review:
             return None
-        if review in review.places.reviews:
+        if review in review.place.reviews:
             review.place.reviews.remove(review)
         if review in review.user.reviews:
             review.user.reviews.remove(review)
