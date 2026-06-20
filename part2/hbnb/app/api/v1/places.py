@@ -124,5 +124,5 @@ class PlaceReviewList(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
         reviews = facade.get_reviews_by_place(place_id)
-        return [{'id': review.id, 'text': review.text, 'rating': review.rating, 'user_id': review.user.id, 'place_id': review.place.id
+        return [{'id': review.id, 'text': review.text, 'rating': review.rating
         } for review in reviews], 200
