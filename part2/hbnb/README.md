@@ -208,6 +208,18 @@ Then hit the **execute** button and if you have entered 2 strings and a new emai
 
 ![user success](images/DOM.png)
 
+Curl commmand:
+```
+curl -X 'POST' \
+  'http://127.0.0.1:5000/api/v1/users/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "first_name": "Dominik",
+  "last_name": "Szoboszlai",
+  "email": "number8@liverpool.com"
+}'
+```
 ## Amenity creation
 
 This works much the same, enter a string and boom, an amenity has been made!!!
@@ -222,6 +234,26 @@ Amenities are optional but if entered they must also match with an existing amen
 ![place making](images/placeenter.png)
 
 You have to enter valid data, valid user id and amenity ids and a non zero price, as well as having conditions around the latitude and longitude.
+
+Curl Command:
+```
+curl -X 'POST' \
+  'http://127.0.0.1:5000/api/v1/places/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "title": "Anfield",
+  "description": "Home of Liverpool football club",
+  "price": 1000000,
+  "latitude": 53.4308,
+  "longitude": 2.9608,
+  "owner_id": "77554ac6-9aa1-4d21-94f0-364ebc196207",
+  "amenities_id": [
+    "631b5c50-5f89-4375-a687-ab507b9d5871",
+    "99b40da4-25a0-4372-81d4-487900cf2b2b"
+  ]
+}'
+```
 
 After hitting execute you should see this if successful
 
@@ -239,6 +271,19 @@ But this is an example of how to do it
 
 ![review making](images/reviewenter.png)
 
+Curl Command:
+```
+curl -X 'POST' \
+  'http://127.0.0.1:5000/api/v1/reviews/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "text": "This is the best place on earth up the reds im upset salah is gone. Bring back Nunez!!!",
+  "rating": 5,
+  "user_id": "a7a04858-0f05-4c89-b360-6befe1c9d7b5",
+  "place_id": "437f8620-daed-41dc-aa70-75531828fadc"
+}'
+```
 And this will show on success
 
 ![review success](images/reviewmade.png)
