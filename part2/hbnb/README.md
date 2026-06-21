@@ -202,8 +202,20 @@ Its thankfully quite self explanatory and you can find the associated curl comma
 ## Creating a user
 Here is an example of how to create a user
 
-![user creation](images/Screenshot 2026-06-21 at 22.45.36.png)
+![user creation](images/dom1.png)
 
 Then hit the **execute** button and if you have entered 2 strings and a new email of the right format you will see
 
 ![user success](images/DOM.png)
+
+## Amenity creation
+
+This works much the same, enter a string and boom, an amenity has been made!!!
+
+## Place creation
+
+Going to the places header and going into POST, you can create a Hbnb.
+
+Only thing to note here is that you need to enter a valid user_id so the place actually belongs to someone.
+
+Amenities are optional but if entered they must also match with an existing amenity id. Here is an example of the creation of Anfield
