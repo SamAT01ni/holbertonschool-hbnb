@@ -192,4 +192,4 @@ We recommend using swagger ui through the localhost because thats what we used s
 Going to show you a few examples of how to use the API anyway
 
 Here is a screenshot of how the api should appear
-![swagger ui](swaggerstart.png)
+![swagger ui](images/swaggerstart.png)
