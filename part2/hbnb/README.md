@@ -190,3 +190,6 @@ You can then try to create users and places yourself using Swagger UI
 
 We recommend using swagger ui through the localhost because thats what we used so i cannot really guide you elsewhere\
 Going to show you a few examples of how to use the API anyway
+
+Here is a screenshot of how the api should appear
+![swagger ui](swaggerstart.png)
