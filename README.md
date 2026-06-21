@@ -20,7 +20,13 @@ It's good to have you with us, even if its just for a day.
      - Review Submission
      - Fetching a list of places
 
-2. Coming soon
+2. Business Logic and API
+    - implementing the business logic facade by creating:
+      - the user model
+      - place model
+      - review model
+      - amenity model
+    - Developing RESTful API endpoints for the user, places, reviews and amenities
 
 ---
 
