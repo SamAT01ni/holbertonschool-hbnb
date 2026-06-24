@@ -22,6 +22,9 @@ class User(BaseModel):
         if not email or not self._valid_email(email):
             raise ValueError("Valid email is required")
 
+        if not password:
+            raise ValueError("Password is required.")
+
         if not isinstance(is_admin, bool):
             raise ValueError("is_admin must be a boolean.")
 
