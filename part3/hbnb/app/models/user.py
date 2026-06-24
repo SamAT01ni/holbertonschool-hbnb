@@ -3,12 +3,13 @@
 
 import re
 from app.models.base_model import BaseModel
+from app import bcrypt
 
 
 class User(BaseModel):
     """User class for HBnB users."""
 
-    def __init__(self, first_name, last_name, email, is_admin=False):
+    def __init__(self, first_name, last_name, email, password, is_admin=False):
         """Initialise a User instance."""
         super().__init__()
 
@@ -27,6 +28,7 @@ class User(BaseModel):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.hash_password(password)
         self.is_admin = is_admin
         self.places = []
         self.reviews = []
@@ -35,3 +37,11 @@ class User(BaseModel):
         """Validate email frmat."""
         pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
         return re.match(pattern, email) is not None
+
+    def hash_password(self, password):
+        """Hash password before storing it."""
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    def verify_password(self, password):
+        """Check if password matches hashed password."""
+        return bcrypt.check_password_hash(self.password, password)
