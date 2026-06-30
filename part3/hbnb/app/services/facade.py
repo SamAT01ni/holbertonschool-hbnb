@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from app.persistence.repository import InMemoryRepository
+from app.persistence.repository import SQLAlchemyRepository
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
@@ -8,7 +8,7 @@ from app.models.review import Review
 
 class HBnBFacade:
     def __init__(self):
-        self.user_repo = InMemoryRepository()
+        self.user_repo = SQLAlchemyRepository(User)
         self.place_repo = InMemoryRepository()
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
@@ -17,12 +17,15 @@ class HBnBFacade:
 
   # Placeholder method for creating a user
     def create_user(self, user_data):
+        user = User(**user_data)
+        self.user_repo.add(user)
+        return user
+
         if not User._valid_email(self, user_data['email']):
             return None
         existing_user = self.get_user_by_email(user_data['email'])
         if existing_user:
             return None
-
         user = User(**user_data)
         self.user_repo.add(user)
         return user
