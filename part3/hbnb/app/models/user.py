@@ -4,8 +4,6 @@
 import re
 from app.models.base_model import BaseModel
 from app.extensions import bcrypt, db
-import uuid
-from .base_model import BaseModel
 
 class User(BaseModel):
     __tablename__ = 'users'
@@ -58,11 +56,3 @@ class User(BaseModel):
         """Validate email frmat."""
         pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
         return re.match(pattern, email) is not None
-
-    def hash_password(self, password):
-        """Hash password before storing it."""
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
-
-    def verify_password(self, password):
-        """Check if password matches hashed password."""
-        return bcrypt.check_password_hash(self.password, password)
