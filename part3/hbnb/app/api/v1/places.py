@@ -34,6 +34,7 @@ place_model = api.model('Place', {
     'price': fields.Float(required=True, description='Price per night'),
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
+    'owner_id': fields.String(
     'amenities_id': fields.List(fields.String, required=False, description="List of amenities ID's"),
 })
 
@@ -81,7 +82,7 @@ class PlaceList(Resource):
         """Register a new place"""
         current_user = get_jwt_identity()
         place_data = api.payload
-        place_data["owner_id"] = get_jwt_identity
+        place_data["owner_id"] = current_user
         try:
             new_place = facade.create_place(place_data)
         except ValueError as e:
