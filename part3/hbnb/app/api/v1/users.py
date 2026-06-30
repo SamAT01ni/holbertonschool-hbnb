@@ -3,6 +3,8 @@
 
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
 
 api = Namespace('users', description='User operations')
 
@@ -87,13 +89,18 @@ class UserResource(Resource):
     @api.response(404, 'User does not exist')
     @api.response(400, 'Invalid input data')
     @api.marshal_with(user_lamb)
+    @jwt_required()
     def put(self, user_id):
         """Update user info."""
+        current_user = get_jwt_identity()
+        if user_id != current_user:
+            return {"error": "Unauthorised action"}, 403
         user = facade.update_user(user_id, api.payload)
 
         if not user:
             return {'error': 'User not found'}, 404
-
+        if 'email' in user or 'password' in user:
+            return {'error': 'You cannot modify email or password'}, 400
         return user, 200
 
 
