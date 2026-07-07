@@ -2,16 +2,10 @@
 """Amenity model."""
 
 from app.models.base_model import BaseModel
-
+from app.extensions import db
 
 class Amenity(BaseModel):
     """Amenity class fir place amenities."""
-
-    def __init__(self, name):
-        """Initialise an Amenity instance."""
-        super().__init__()
-
-        if not name or len(name) > 50:
-            raise ValueError("Name is required and must be 50 characters or less.")
-
-        self.name = name
+    __tablename__ = 'amenities'
+    
+    name = db.Column(db.String(50), nullable=False)

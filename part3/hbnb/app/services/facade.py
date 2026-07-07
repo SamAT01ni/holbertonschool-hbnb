@@ -72,19 +72,7 @@ class HBnBFacade:
 
 # Placeholder method for fetching a place by ID
     def create_place(self, place_data):
-        owner = self.user_repo.get(place_data['owner_id'])
-        if not owner:
-            return None
-
         place = Place(**place_data)
-        place.owner = owner
-        place.amenities = []
-        for amen in place_data.get('amenities_id', []):
-            amenity = self.amenity_repo.get(amen)
-            if not amenity:
-                return None
-            place.amenities.append(amenity)
-
         self.place_repo.add(place)
         return place
 
@@ -113,24 +101,7 @@ class HBnBFacade:
 ############################################
 
     def create_review(self, review_data):
-        user = self.get_user(review_data['user_id'])
-        place = self.get_place(review_data['place_id'])
-
-        if not user or not place:
-            return None
-        if place.owner_id == user.id:
-            return None
-
-        try:
-            review = Review(
-                text=review_data['text'],
-                rating=int(review_data['rating']),
-                user=user,
-                place=place
-            )
-        except (ValueError, TypeError):
-            return None
-
+        review = Review(**review_data)
         self.review_repo.add(review)
         return review
 
@@ -145,6 +116,7 @@ class HBnBFacade:
         if not place:
             return None
         return place.reviews
+    
     def get_reviews_by_user(self, user_id):
         user = self.user_repo.get(user_id)
         if not user:

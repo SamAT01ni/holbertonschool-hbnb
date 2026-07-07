@@ -3,41 +3,18 @@
 
 from app.models.base_model import BaseModel
 from app.models.user import User
+from app.extensions import db
 
 
 class Place(BaseModel):
     """Place class for property listings."""
+    __tablename__ = 'places'
 
-    def __init__(self, title, description, price, latitude, longitude, owner_id, amenities_id=None):
-        super().__init__()
-
-        if not title or len(title) > 100:
-            raise ValueError("Title is required and must be 100 characters or less.")
-
-        if price <= 0:
-            raise ValueError("Price must be a positive value.")
-
-        if latitude < -90.0 or latitude > 90.0:
-            raise ValueError("Latitude must be between -90.0 and 90.0")
-
-        if longitude < -180.0 or longitude > 180.0:
-            raise ValueError("Longitude must be between -180.0 and 180.0")
-            
-#        if not isinstance(owner_id, User):
-#            raise ValueError("Owner must be a User instance")
-
-        self.title = title
-        self.description = description
-        self.price = float(price)
-        self.latitude = float(latitude)
-        self.longitude = float(longitude)
-        self.owner_id = owner_id
-        self.reviews = []
-        self.amenities_id = amenities_id if amenities_id else []
-        self.amenities = []
-        
-        self.owner = None
-
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(256), nullable=True)
+    price = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
 
     def add_review(self, review):
         """Add a review to the place."""
