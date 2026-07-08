@@ -37,7 +37,7 @@ place_model = api.model('Place', {
     'amenities_id': fields.List(fields.String, required=False, description="List of amenities ID's"),
 })
 
-place_model_lamb = api.model("Place ID", {
+place_model_response = api.model("Place ID", {
     'id': fields.String,
     'title': fields.String,
     'description': fields.String,
@@ -48,13 +48,13 @@ place_model_lamb = api.model("Place ID", {
 })
 
 
-place_lamb1 = api.model('Place Marhsal 1', {
+place_list_response = api.model('Place Marhsal 1', {
     'id': fields.String,
     'title': fields.String,
     'latitude': fields.Float,
     'longitude': fields.Float,
 })
-place_lamb2 = api.model('Place Marhsal 2', {
+place_model_created_response = api.model('Place Marhsal 2', {
     'id': fields.String,
     'title': fields.String,
     'description': fields.String,
@@ -63,7 +63,7 @@ place_lamb2 = api.model('Place Marhsal 2', {
     'longitude': fields.Float,
     'owner_id': fields.String,
 })
-place_lamb3 = api.model('Place Marshal 3', {
+place_model_updated_response = api.model('Place Marshal 3', {
     'title': fields.String,
     'description': fields.String,
     'price': fields.Float,
@@ -75,7 +75,7 @@ class PlaceList(Resource):
     @api.expect(place_model)
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
-    @api.marshal_with(place_lamb2)
+    @api.marshal_with(place_model_created_response)
     @jwt_required()
     def post(self):
         """Register a new place"""
@@ -99,7 +99,7 @@ class PlaceList(Resource):
         return new_place, 201
 
     @api.response(200, 'List of places retrieved successfully')
-    @api.marshal_list_with(place_lamb1)
+    @api.marshal_list_with(place_list_response)
     def get(self):
         """Retrieve a list of all places"""
         places = facade.get_all_places()
@@ -110,7 +110,7 @@ class PlaceList(Resource):
 class PlaceResource(Resource):
     @api.response(200, 'Place details retrieved successfully')
     @api.response(404, 'Place not found')
-    @api.marshal_with(place_model_lamb)
+    @api.marshal_with(place_model_response)
     def get(self, place_id):
         """Get place details by ID"""
         place = facade.get_place(place_id)
@@ -118,7 +118,7 @@ class PlaceResource(Resource):
             api.abort(404, 'Place not found')
         return place, 200
 
-    @api.expect(place_lamb3)
+    @api.expect(place_model_updated_response)
     @api.response(200, 'Place updated successfully')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
