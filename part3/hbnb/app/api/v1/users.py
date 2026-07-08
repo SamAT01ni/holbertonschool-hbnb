@@ -27,7 +27,7 @@ user_model = api.model('User', {
     )
 })
 
-user_lamb = api.model('User marshal', {
+user_list_response = api.model('User marshal', {
     'id': fields.String,
     'first_name': fields.String,
     'last_name': fields.String,
@@ -65,7 +65,7 @@ class UserList(Resource):
         }, 201
 
     @api.response(200, 'User list retrieved successfully')
-    @api.marshal_list_with(user_lamb)
+    @api.marshal_list_with(user_list_response)
     def get(self):
         """Get all users."""
         users = facade.get_user_list()
@@ -96,7 +96,7 @@ class UserResource(Resource):
     @api.response(200, 'User successfully updated')
     @api.response(404, 'User does not exist')
     @api.response(400, 'Invalid input data')
-    @api.marshal_with(user_lamb)
+    @api.marshal_with(user_list_response)
     @jwt_required()
     def put(self, user_id):
         """Update user info."""

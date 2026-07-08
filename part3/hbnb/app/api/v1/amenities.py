@@ -12,7 +12,7 @@ api = Namespace('amenities', description='Amenity operations')
 amenity_model = api.model('Amenity', {
     'name': fields.String(required=True, description='Name of the amenity')
 })
-amenity_lamb = api.model('Amenity Marshal', {
+amenity_post_response = api.model('Amenity Marshal', {
     'id': fields.String,
     'name': fields.String,
 })
@@ -22,7 +22,7 @@ class AmenityList(Resource):
     @api.expect(amenity_model)
     @api.response(201, 'Amenity successfully created')
     @api.response(400, 'Invalid input data')
-    @api.marshal_with(amenity_lamb)
+    @api.marshal_with(amenity_post_response)
     @jwt_required()
 
     def post(self):
@@ -37,7 +37,7 @@ class AmenityList(Resource):
         return new_amenity, 201
 
     @api.response(200, 'List of amenities retrieved successfully')
-    @api.marshal_list_with(amenity_lamb)
+    @api.marshal_list_with(amenity_post_response)
     def get(self):
         """Retrieve a list of all amenities"""
         amenities = facade.get_all_amenities()

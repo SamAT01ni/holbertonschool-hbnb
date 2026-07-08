@@ -13,7 +13,7 @@ review_model = api.model('Review', {
     'place_id': fields.String(required=True, description='ID of the place')
 })
 
-review_lamb1 = api.model('Review Marshal 1', {
+review_post_response = api.model('Review Marshal 1', {
     'id': fields.String,
     'text': fields.String,
     'rating': fields.Integer,
@@ -21,13 +21,13 @@ review_lamb1 = api.model('Review Marshal 1', {
     'place_id': fields.String(attribute='place.id')
 })
 
-review_lamb2 = api.model('Review Marshal 1', {
+review_list_response = api.model('Review Marshal 1', {
     'id': fields.String,
     'text': fields.String,
     'rating': fields.Integer,
 })
 
-review_lamb3 = api.model('Review marshal 3', {
+review_update_response = api.model('Review marshal 3', {
     'text': fields.String,
     'rating': fields.Integer
 })
@@ -37,7 +37,7 @@ class ReviewList(Resource):
     @api.expect(review_model, validate=True)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
-    @api.marshal_with(review_lamb1)
+    @api.marshal_with(review_post_response)
     @jwt_required()
     def post(self):
         """Register a new review"""
@@ -56,7 +56,7 @@ class ReviewList(Resource):
         return new_review, 201
 
     @api.response(200, 'List of reviews retrieved successfully')
-    @api.marshal_list_with(review_lamb2)
+    @api.marshal_list_with(review_list_response)
     def get(self):
         reviews = facade.get_all_reviews()
         return reviews
@@ -66,7 +66,7 @@ class ReviewList(Resource):
 class ReviewResource(Resource):
     @api.response(200, 'Review details retrieved successfully')
     @api.response(404, 'Review not found')
-    @api.marshal_with(review_lamb1)
+    @api.marshal_with(review_post_response)
     def get(self, review_id):
         """Get review details by ID"""
         review = facade.get_review(review_id)
@@ -74,7 +74,7 @@ class ReviewResource(Resource):
             return {'error': 'Review not found'}, 404
         return review, 200
 
-    @api.expect(review_lamb3)
+    @api.expect(review_update_response)
     @api.response(200, 'Review updated successfully')
     @api.response(404, 'Review not found')
     @api.response(400, 'Invalid input data')
