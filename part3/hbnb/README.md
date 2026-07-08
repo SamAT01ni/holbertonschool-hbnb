@@ -61,7 +61,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/places/ \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <ACCESS_TOKEN>" \
 -d '{
-  "title": "Jon's gaff",
+  "title": "Jons gaff",
   "description": "Chateau du Jon",
   "price": 25000.00,
   "latitude": 48.805,
