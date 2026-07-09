@@ -50,10 +50,10 @@ class ReviewList(Resource):
         review_data["user_id"] = current_user
         
         if place.owner_id == current_user:
-            return {"error": "Cant review your own place"}, 400
+            api.abort(400, "Uh uh, thats your place, no fraud please")
         for review in place.reviews:
             if review.user.id == current_user:
-                return {'error': 'You have already reviewed this place'}, 400
+                api.abort(400, "You have already reviewed this place")
 
         new_review = facade.create_review(review_data)
         if not new_review:
