@@ -12,6 +12,7 @@ class BaseModel(db.Model):
     def save(self):
         """ Updates timestamp """
         self.updated_at = datetime.utcnow()
+        db.session.commit()
     def update(self, data):
         for key, value in data.items():
             if hasattr(self, key):
