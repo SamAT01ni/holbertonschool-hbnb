@@ -17,8 +17,8 @@ review_post_response = api.model('Review post marshal', {
     'id': fields.String,
     'text': fields.String,
     'rating': fields.Integer,
-    'user_id': fields.String(attribute='user.id'),
-    'place_id': fields.String(attribute='place.id')
+    'user_id': fields.String,
+    'place_id': fields.String,
 })
 
 review_list_response = api.model('Review list marshal', {
@@ -43,16 +43,21 @@ class ReviewList(Resource):
         """Register a new review"""
         current_user = get_jwt_identity()
         review_data = api.payload
-        review_data["user_id"] = get_jwt_identity()
-        new_review = facade.create_review(review_data)
+        place = facade.get_place(review_data["place_id"])
+        if not place:
+            return {"error": "PLace not found"}, 404
+
+        review_data["user_id"] = current_user
         
-        if not new_review:
-            api.abort(400, 'Invalid input data')
-        if place.owner.id == current_user:
+        if place.owner_id == current_user:
             return {"error": "Cant review your own place"}, 400
         for review in place.reviews:
             if review.user.id == current_user:
                 return {'error': 'You have already reviewed this place'}, 400
+
+        new_review = facade.create_review(review_data)
+        if not new_review:
+            return {"error": "Invalid input data"}
         return new_review, 201
 
     @api.response(200, 'List of reviews retrieved successfully')
