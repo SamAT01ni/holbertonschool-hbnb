@@ -42,6 +42,8 @@ This can also be branched out to show relations for potential new elements that 
 
 This shows how reservations would be able to booked and how they would be related to the other entities in the database, where one user can make many reservations, and one place is linked to each reservation.
 
+One thing to note, when the entities User, Review, Place and Amenity are committed to the database, because they all derive from the BaseClass they are entered with utcnow data (date-a if you will) so in the database there are 2 extra columns for created_at and updated_at which get automatically inserted as you post or update these entities.
+
 ---
 
 # Setup and running HBnB
