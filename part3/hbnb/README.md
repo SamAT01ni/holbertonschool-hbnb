@@ -58,12 +58,6 @@ cd holbertonschool-hbnb/part3/hbnb
 ```
 pip install -r requirements.txt
 ```
-## Create the database
-
-Open flask shell using
-```bash
-flask shell
-```
 # Lachy please step in my king
 
 ## Run the application
@@ -174,10 +168,145 @@ The Business Logic Layer implements the following relationships:
 
 # Using the API
 
-## Create an admin in flask
+## Create the database and admin in flask
 
 Firstly open `flask shell`, next enter this code:
 
-***AAAAAAAHHHHHHH***
+```python
+from app import db
+db.create_all()
+from app.models.user import User
+admin = User(
+    id="36c9050e-ddd3-4c3b-9731-9f487208bbc1",
+    first_name="Jon",
+    last_name="Clus",
+    email="admin@hbnb.com",
+    is_admin=True
+)
+admin.hash_password("password")
+db.session.add(admin)
+db.session.commit()
+```
+This has created the tables in the database, and created the admin
 
+We chose the password to be password because i thought it was funny
+
+![fence](images/fence.jpeg)
+
+exit out of the flask shell with `quit()`
+
+## Log in as the admin
+
+Bonjour Jon, time to use your admin privileges (for good, preferably)
+Use curl to use the login endpoint
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/auth/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "admin@hbnb.com",
+  "password": "password"
+}'
+```
+
+This will return you with an "access token" which you must use for any endpoints where authorisation is required
+```bash
+    "access_token": "eyJhbGciOi..."
+```
+
+## Create a new user
+
+Well Jon, youre in! Time to fill up our small little world, shall we? Who does your heart desire to make?
+
+Well, I am here from the past so i shall make your decision for you. We shall make the last great Frenchman (other than yourself)
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/users/ \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer [admin access code here]" \
+-d '{
+  "first_name": "Dom",
+  "last_name": "Perignon",
+  "email": "dommy@champagne.com",
+  "password": "monkwine123"
+}'
+```
+This will return this information as well as a user id
+While we're still logged in as Jon, we can make a couple of amenities to add to our future château.
+
+## Create amenities
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/amenities/ \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer [admin access token]" \
+-d '{
+  "name": "Cellar"
+}'
+```
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/amenities/ \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer [admin access token]" \
+-d '{
+  "name": "Old monks"
+}'
+```
+This will return the name of the amenity as well as its amenity id
+
+## Making Dom's wine haven
+
+Tres bien. Log in as Dom using the log in method as shown before but with our monastic friend's credentials which will return an access token for him, and lets get posting a location
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/places/ \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer [Dom's access token]" \
+-d '{
+  "title": "Abbaye Saint-Pierre d'Hautvillers",
+  "description": "Weird church where Dom refined his blending skills. Don't mind the monks!",
+  "price": 180,
+  "latitude": 49.081,
+  "longitude": 13.941,
+  "amenities_id": [
+    "[Cellar amenity_id]",
+    "[Old monk amenity_id]",
+  ]
+}'
+```
+And look, now we have an abbey thats linked to Dom Perignon and its place id.
+
+## Extra examples of what you can do
+
+You can also use `PUT` to update information (if you have the right permissions) so if dom wants to update the abbey, you can use:
+```bash
+curl -X PUT http://127.0.0.1:5000/api/v1/places/PLACE_ID_HERE \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer [owner or admin access token]" \
+-d '{
+  "title": "Abbaye Saint-Pierre d'Hautvillers",
+  "description": "Dom died, the building is in disrepair",
+  "price": 2
+}'
+```
+
+And if you wanted to leave a review, log back in as Jon (you cannot leave a review on a place that you own) and drop one!
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/reviews/ \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer [non-owner access token]" \
+-d '{
+  "text": "Wine was good, place felt cold, i tasted the stars",
+  "rating": 4,
+  "place_id": "PLACE_ID_HERE"
+}'
+```
+---
+# Authors
+
+### This has been a '4 in a Bed at the HBnB' production brought to you by:
+
+- Anthony Joy
+- Zac Malkoun
+- Lachlan McKenna
+- Sam Thompson
+
+Go pies, C'mon Liverpool, hope england use yadda yadda yadda,
 ***You must not create anything machester united or arsenal related or there will be consequences***
