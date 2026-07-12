@@ -183,7 +183,7 @@ The Business Logic Layer implements the following relationships:
 
 ## Create the database and admin in flask
 
-Firstly open `flask shell` methods such as `python -m flask shell` work, next enter this code:
+Firstly open `flask shell` methods such as `python3 -m flask shell` work, next enter this code:
 
 ```python
 from app import db
